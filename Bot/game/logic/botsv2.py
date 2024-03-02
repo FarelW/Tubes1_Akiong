@@ -56,6 +56,7 @@ def findDistance(current:Position,teleport:List[Tuple[Position,Position]],target
             return tp_entry,distance,True
     distance=current_to_target
     return target,distance,False
+
 def findClusters(current: GameObject, diamonds: List[GameObject], cluster_distance_threshold: int):
     clusters = []
     for diamond in diamonds:
@@ -84,10 +85,8 @@ def findClusters(current: GameObject, diamonds: List[GameObject], cluster_distan
     else:
         return None, 0, 0
 
-
-
 def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], diamonds: List[GameObject], board: Board, redButton: List[Position]):
-    cluster_target, cluster_efficiency,expected = findClusters(current, diamonds, 2)
+    cluster_target, cluster_efficiency,expected = findClusters(current, diamonds, 1)
     distance_diamond_blue = 100
     distance_diamond_red = 100
     target_blue = None
@@ -120,8 +119,8 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
     print("Closer efficiency:",value/calculatedDistance)
     red_button_target, distance_to_red_button, is_tp_red_button = findDistance(current.position, teleport, redButton[0])
     should_press_red_button = False
-    if current.properties.diamonds == current.properties.inventory_size:
-        should_press_red_button = True
+    # if current.properties.diamonds == current.properties.inventory_size:
+    #     should_press_red_button = True
     if min(distance_diamond_blue, distance_diamond_red) > distance_to_red_button:
         should_press_red_button = True
     if should_press_red_button:
@@ -130,6 +129,7 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
     if cluster_target and cluster_efficiency > value/calculatedDistance  and expected <= remaining_inventory:
         calculatedDistance = findDistance(current.position, teleport, cluster_target.position)[1]
         return cluster_target.position, findDistance(current.position, teleport, cluster_target.position)[2]
+
     if distance_diamond_blue < distance_diamond_red - round(board.width / 3):
         if distance_base_blue + distance_diamond_blue > round(current.properties.milliseconds_left / 1000):
             return base_target, is_back_tp
@@ -146,8 +146,6 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
                     return base_target, is_back_tp
                 else:
                     return target_blue, is_tp_blue
-
-
 
 def findQuadran(current:Position,target:Position):
     direction_quadran=10
@@ -297,16 +295,16 @@ def ignoreTeleport(current:Position,teleport:List[Tuple[Position,Position]],targ
 
     return result
 
-class MainLogic(BaseLogic):
+class SonLogic(BaseLogic):
     def __init__(self):
-        self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1),(0,0)]
+        self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None
         self.current_direction = 0
 
     def next_move(self, board_bot: GameObject, board: Board):
         teleport,redbutton=findTeleportandRedButton(board.game_objects)
         target,is_teleport=findTarget(board_bot,teleport,board.diamonds,board,redbutton)
-        # print("Base=",board.properties.base)
+        # print("Base=",board_bot.properties.base)
         if not is_teleport:
             target=ignoreTeleport(board_bot.position,teleport,target,board)
         

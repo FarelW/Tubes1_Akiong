@@ -5,7 +5,11 @@ from colorama import Back, Fore, Style, init
 from game.api import Api
 from game.board_handler import BoardHandler
 from game.bot_handler import BotHandler
-from game.logic.random import RandomLogic
+# from Bot.game.logic.botsv3 import MainLogic
+# from Bot.game.logic.botsv2 import SonLogic
+# from Bot.game.logic.botsv1 import NgasalLogic
+from game.logic.akiongbot import AkiongLogic
+from game.logic.pat import PatLogic
 from game.util import *
 from game.logic.base import BaseLogic
 
@@ -13,7 +17,8 @@ init()
 BASE_URL = "http://localhost:3000/api"
 DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
-    "Random": RandomLogic,
+    "Akiong":AkiongLogic,
+    "Pat":PatLogic,
 }
 
 ###############################################################################
@@ -203,7 +208,7 @@ while True:
 
     # Don't spam the board more than it allows!
     # sleep(move_delay * time_factor)
-    sleep(1)
+    sleep(0.5)
 
 
 ###############################################################################
