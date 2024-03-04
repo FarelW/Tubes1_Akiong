@@ -9,7 +9,7 @@ from game.bot_handler import BotHandler
 # from Bot.game.logic.botsv2 import SonLogic
 # from Bot.game.logic.botsv1 import NgasalLogic
 from game.logic.akiongbot import AkiongLogic
-from game.logic.pat import PatLogic
+from game.logic.testerbot import TesterLogic
 from game.util import *
 from game.logic.base import BaseLogic
 
@@ -18,7 +18,7 @@ BASE_URL = "http://localhost:3000/api"
 DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
     "Akiong":AkiongLogic,
-    "Pat":PatLogic,
+    "Tester":TesterLogic,
 }
 
 ###############################################################################
