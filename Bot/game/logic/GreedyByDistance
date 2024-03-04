@@ -1,0 +1,78 @@
+import random
+from typing import Optional
+from game.logic.base import BaseLogic
+from game.models import GameObject, Board, Position
+from ..util import get_direction
+
+def find_other_teleport_position(game_objects, pair_id):
+    for game_object in game_objects:
+        if game_object.type == 'TeleportGameObject' and game_object.properties.pair_id == pair_id:
+            return game_object.position
+    return None
+def findclosest(current: GameObject, goal: 'list[GameObject]', teleport_pairs: 'list[tuple[Position, Position]]'):
+    closest_distance = 100
+    aim = None
+    end_target = None
+    for target in goal:
+        direct_distance = distance(current.position, target.position)
+        if direct_distance < closest_distance:
+            closest_distance = direct_distance
+            aim = target.position
+            end_target = None 
+        for pair in teleport_pairs:
+            teleport_distance_1 = distance(current.position, pair[0]) + distance(pair[1], target.position)
+            teleport_distance_2 = distance(current.position, pair[1]) + distance(pair[0], target.position)
+            teleport_distance = min(teleport_distance_1, teleport_distance_2)
+            if teleport_distance < closest_distance:
+                closest_distance = teleport_distance
+                aim = pair[0] if teleport_distance_1 < teleport_distance_2 else pair[1]
+                end_target = target.position
+
+    return aim, end_target
+def find_teleport_pairs(game_objects):
+    teleport_pairs = {}
+    for game_object in game_objects:
+        if game_object.type == 'TeleportGameObject':
+            pair_id = game_object.properties.pair_id
+            position = game_object.position 
+            if pair_id in teleport_pairs:
+                teleport_pairs[pair_id].append(position)
+            else:
+                teleport_pairs[pair_id] = [position]
+    return [(pair[0], pair[1]) for pair in teleport_pairs.values() if len(pair) == 2]
+def distance(pos1, pos2):
+    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
+class RandomLogic(BaseLogic):
+    def __init__(self):
+        self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        self.goal_position: Optional[Position] = None
+        self.end_target: Optional[Position] = None
+        self.current_direction = 0
+
+    def next_move(self, board_bot: GameObject, board: Board):   
+        teleport_pairs = find_teleport_pairs(board.game_objects)
+        props = board_bot.properties
+        if props.diamonds == 5:
+            base = board_bot.properties.base
+            self.goal_position = base
+        elif props.diamonds == 4:
+            blue_diamonds = [diamond for diamond in board.diamonds if diamond.properties.points == 1]
+            aim, end_target = findclosest(board_bot, blue_diamonds, teleport_pairs)
+            self.goal_position = aim
+        else:
+            aim, end_target = findclosest(board_bot, board.diamonds, teleport_pairs)
+            self.goal_position = aim
+        current_position = board_bot.position
+        if self.goal_position:
+            delta_x, delta_y = get_direction(current_position.x, current_position.y, self.goal_position.x, self.goal_position.y)
+        else:
+            delta_x, delta_y = get_direction(current_position.x, current_position.y, aim.x, aim.y)
+
+        if end_target:
+            self.end_target = end_target 
+        elif self.end_target and current_position == self.end_target:
+            self.end_target = None  
+        if self.end_target:
+            self.goal_position = self.end_target
+
+        return delta_x, delta_y

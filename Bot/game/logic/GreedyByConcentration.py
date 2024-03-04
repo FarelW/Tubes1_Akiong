@@ -181,7 +181,7 @@ def findDistance(current:Position,teleport:List[Tuple[Position,Position]],target
 #             else:
 #                 return False,quadran
             
-# def ignoreTeleport(current:Position,teleport:List[Tuple[Position,Position]],target:Position, board:Board):
+def ignoreTeleport(current:Position,teleport:List[Tuple[Position,Position]],target:Position, board:Board):
     result:Position=target
 
     is_teleport_interupt,quadran=False,None
