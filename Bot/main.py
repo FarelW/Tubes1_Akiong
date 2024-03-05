@@ -9,7 +9,10 @@ from game.bot_handler import BotHandler
 # from Bot.game.logic.botsv2 import SonLogic
 # from Bot.game.logic.botsv1 import NgasalLogic
 from game.logic.akiongbot import AkiongLogic
-from game.logic.testerbot import TesterLogic
+from game.logic.GreedyByDistance import V1Logic
+from game.logic.GreedyByClosestValue import V2Logic
+from game.logic.GreedyBySurroundingDiamond import V3Logic
+from game.logic.GreedyByClosestToBase import V4Logic
 from game.util import *
 from game.logic.base import BaseLogic
 
@@ -18,7 +21,10 @@ BASE_URL = "http://localhost:3000/api"
 DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
     "Akiong":AkiongLogic,
-    "Tester":TesterLogic,
+    "V4":V4Logic,
+    "V3":V3Logic,
+    "V2":V2Logic,
+    "V1":V1Logic,
 }
 
 ###############################################################################

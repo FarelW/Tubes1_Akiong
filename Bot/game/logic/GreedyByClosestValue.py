@@ -249,7 +249,7 @@ def ignoreTeleport(current:Position,teleport:List[Tuple[Position,Position]],targ
 
     return result
 
-class NgasalLogic(BaseLogic):
+class V2Logic(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None

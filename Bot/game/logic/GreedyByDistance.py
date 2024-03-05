@@ -42,7 +42,7 @@ def find_teleport_pairs(game_objects):
     return [(pair[0], pair[1]) for pair in teleport_pairs.values() if len(pair) == 2]
 def distance(pos1, pos2):
     return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
-class RandomLogic(BaseLogic):
+class V1Logic(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None

@@ -79,7 +79,7 @@ def findClosestDiamond(current:Position,diamond:List[Position]):
     
     return closest,target
 
-class TesterLogic(BaseLogic):
+class V4Logic(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None

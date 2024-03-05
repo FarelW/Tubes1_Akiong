@@ -323,7 +323,7 @@ def findCluster(current:GameObject,teleport: List[Tuple[Position,Position]],redb
 
     return target
 
-class MainLogic(BaseLogic):
+class V3Logic(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None
