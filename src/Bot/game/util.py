@@ -145,10 +145,6 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
     if should_press_red_button:
         return red_button_target, is_tp_red_button
 
-    remaining_inventory = current.properties.inventory_size - current.properties.diamonds
-    if remaining_inventory == 0 and target_red:
-        return target_red, is_tp_red
-
     if cluster_target and cluster_efficiency > value / calculated_distance and expected <= remaining_inventory:
         _, calculated_distance, temp = findDistance(current.position, teleport, cluster_target.position)
         return cluster_target.position, temp

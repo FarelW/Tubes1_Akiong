@@ -158,3 +158,4 @@ This repository contains main folder structure such as _doc_, _public_, and _src
    - Contributor 1 (Wilson Yusda) - https://github.com/Razark-Y
    - Contributor 2 (Farel Winalda) - https://github.com/FarelW
    - Contributor 3 (Miftahul Jannah) - https://github.com/miftahstudy
+- This is our video presentation : https://youtu.be/8Kr5eX_Ookg?si=to-oYuELe5ywHZWH
