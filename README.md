@@ -9,6 +9,7 @@
 - [Built With](#built-with)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [File Structures Overview](#file-structures-overview)
 - [Links](#links)
 
 
@@ -142,6 +143,12 @@ Here is the plain package to start this game :
 - [Game Engine](https://github.com/haziqam/tubes1-IF2211-game-engine/releases/tag/v1.1.0)
 
 Or you can read the full documentation of  [Etimo](https://docs.google.com/document/d/1L92Axb89yIkom0b24D350Z1QAr8rujvHof7-kXRAp7c/edit) here
+
+## File Structures Overview
+This repository contains main folder structure such as _doc_, _public_, and _src_.
+- `doc`: This folder contains documents that provide accountability for the development of this project, as part of a major assignment. In other words, the "doc" folder will contain reports created for this project.
+- `public`: This folder used to store any public data and any other data and assets
+- `src`: This folder contains the primary codebase for building this project, consistings of Bot folder for logic handler and Game Engine folder 
 
 ## Links
 - Repository : https://github.com/FarelW/Tubes1_Akiong
