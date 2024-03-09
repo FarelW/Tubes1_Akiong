@@ -13,7 +13,7 @@
 
 
 ## Overview
-![Screenshot 2023-11-19 153812]()
+![Foto](https://github.com/FarelW/Tubes1_Akiong/blob/main/public/324605.jpg)
 Our Team members :
 - 13522019 - Wilson Yusda
 - 13522047 - Farel Winalda
