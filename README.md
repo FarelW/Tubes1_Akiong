@@ -18,7 +18,7 @@
 Our Team members :
 - 13522019 - Wilson Yusda
 - 13522047 - Farel Winalda
-- 10023500 - Mifathul Jannah
+- 10023500 - Miftahul Jannah
 
 <p>Our Lecturer : Dr. Ir. Rinaldi Munir, M.T.</p>
 
@@ -157,4 +157,4 @@ This repository contains main folder structure such as _doc_, _public_, and _src
 - Github main contributor :
    - Contributor 1 (Wilson Yusda) - https://github.com/Razark-Y
    - Contributor 2 (Farel Winalda) - https://github.com/FarelW
-   - Contributor 3 (Mifathul Jannah) - https://github.com/miftahstudy
+   - Contributor 3 (Miftahul Jannah) - https://github.com/miftahstudy
