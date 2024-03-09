@@ -62,20 +62,25 @@ def findDiamondNearBase(current: GameObject, diamond: List[GameObject], board: B
 
     for d in diamond:
         if x_min <= d.position.x <= x_max and y_min <= d.position.y <= y_max:
-            arraydiamond.append(d.position)
+            arraydiamond.append(d)
         else:
-            fardiamond.append(d.position)
+            fardiamond.append(d)
 
     return arraydiamond,fardiamond
 
-def findClosestDiamond(current:Position,diamond:List[Position]):
+def findClosestDiamond(current:GameObject,diamond:List[GameObject]):
     closest=10000
     target=None
     for i in range (len(diamond)):
-        tot=abs(diamond[i].x-current.x)+abs(diamond[i].y-current.y)
+        tot=abs(diamond[i].position.x-current.position.x)+abs(diamond[i].position.y-current.position.y)
         if tot<closest:
-            closest=tot
-            target=diamond[i]
+            if diamond[i].properties.points==2:
+                if current.properties.diamonds!=current.properties.inventory_size-1:
+                    closest=tot
+                    target=diamond[i].position
+            else:
+                closest=tot
+                target=diamond[i].position
     
     return closest,target
 
@@ -93,12 +98,12 @@ class V4Logic(BaseLogic):
         print(diamondnear,diamondfar)
 
         if len(diamondnear)!=0:
-            _,target=findClosestDiamond(board_bot.position,diamondnear)
+            _,target=findClosestDiamond(board_bot,diamondnear)
         else:
             if isNearBase(redbutton,board_bot.properties.base,board):
                 target=redbutton
             else:
-                _,target=findClosestDiamond(board_bot.position,diamondfar)
+                _,target=findClosestDiamond(board_bot,diamondfar)
 
         if props.diamonds == props.inventory_size:
             base = board_bot.properties.base

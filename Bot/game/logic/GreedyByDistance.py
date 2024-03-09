@@ -5,8 +5,6 @@ from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
 from ..util import get_direction
 
-THRESHOLD_TIME = 10
-
 def findTeleportandRedButton(game_objects: List[GameObject]):
     teleport_pairs = {}
     redbutton = None

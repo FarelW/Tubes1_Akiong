@@ -5,7 +5,7 @@ from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
 from ..util import get_direction
 
-THRESHOLD_TIME = 10
+
 
 def findTeleportandRedButton(game_objects: List[GameObject]):
     teleport_pairs = {}
@@ -86,16 +86,15 @@ def findCluster(current: GameObject, diamonds: List[GameObject], cluster_distanc
         return None, 0, 0
 
 def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], diamonds: List[GameObject], redButton: Position, board: Board):
-    DIAMOND_THRESHOLD = 5
     remaining_diamonds = len(diamonds)
     remaining_inventory = current.properties.inventory_size - current.properties.diamonds
 
-    if remaining_diamonds <= DIAMOND_THRESHOLD:
+    if remaining_diamonds <= 3:
         red_button_target, distance_to_red_button, is_tp_red_button = findDistance(current.position, teleport, redButton)
         if distance_to_red_button < remaining_diamonds:
             return red_button_target, is_tp_red_button
 
-    cluster_target, cluster_efficiency, expected = findCluster(current, diamonds, 1)
+    cluster_target, cluster_efficiency, expected = findCluster(current, diamonds, 3)
     distance_diamond_blue = 100
     distance_diamond_red = 100
     target_blue = None
@@ -130,7 +129,7 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
     red_button_target, distance_to_red_button, is_tp_red_button = findDistance(current.position, teleport, redButton)
     should_press_red_button = False
 
-    if min(distance_diamond_blue, distance_diamond_red) >= distance_to_red_button:
+    if min(distance_diamond_blue, distance_diamond_red) >= distance_to_red_button+3:
         should_press_red_button = True
     if should_press_red_button:
         return red_button_target, is_tp_red_button
@@ -143,7 +142,7 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
         _, calculated_distance, temp = findDistance(current.position, teleport, cluster_target.position)
         return cluster_target.position, temp
 
-    if distance_diamond_blue < distance_diamond_red - round(board.width / 3):
+    if distance_diamond_blue < distance_diamond_red - 2:
         if distance_base_blue + distance_diamond_blue > round(current.properties.milliseconds_left / 1000):
             return base_target, is_back_tp
         else:
@@ -155,14 +154,10 @@ def findTarget(current: GameObject, teleport: List[Tuple[Position, Position]], d
             if current.properties.diamonds < current.properties.inventory_size - 1:
                 return target_red, is_tp_red
             else:
-                threshold_distance = 1
-                if target_blue and distance_diamond_blue + distance_base_blue > threshold_distance and current.properties.diamonds > 3:
+                if distance_base_blue + distance_diamond_blue > round(current.properties.milliseconds_left / 1000):
                     return base_target, is_back_tp
                 else:
-                    if distance_base_blue + distance_diamond_blue > round(current.properties.milliseconds_left / 1000):
-                        return base_target, is_back_tp
-                    else:
-                        return target_blue, is_tp_blue
+                    return target_blue, is_tp_blue
 
 def findQuadran(current: Position, target: Position):
     # 10 means vertically, -10 means horizontally
@@ -345,29 +340,12 @@ class AkiongLogic(BaseLogic):
                 self.goal_position.y,
             )
         else:
-            if props.milliseconds_left < THRESHOLD_TIME:
-                distance_to_red_button = findDistance(current_position, teleport, redbutton)[1]
-                if distance_to_red_button < THRESHOLD_TIME:
-                    delta_x, delta_y = get_direction(
-                        current_position.x,
-                        current_position.y,
-                        redbutton.x,
-                        redbutton.y,
-                    )
-                else:
-                    delta_x, delta_y = get_direction(
-                        current_position.x,
-                        current_position.y,
-                        board_bot.properties.base.x,
-                        board_bot.properties.base.y,
-                    )
-            else:
-                delta_x, delta_y = get_direction(
-                    current_position.x,
-                    current_position.y,
-                    target.x,
-                    target.y,
-                )
+            delta_x, delta_y = get_direction(
+                current_position.x,
+                current_position.y,
+                target.x,
+                target.y,
+            )
         print(delta_x,delta_y,board_bot.properties.milliseconds_left, board_bot.properties.score)
 
         if delta_x == 0 and delta_y == 0:
