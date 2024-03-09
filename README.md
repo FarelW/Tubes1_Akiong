@@ -29,7 +29,7 @@ Here is the purpose of making this project :
 
 ## Abstraction
 
-In the project of creating a bot for the game Etimo Diamonds, we are using a greedy algorithm to acquire as many diamonds as possible in the most efficient way. We apply a greedy approach by considering efficiency through emptying the inventory back to the base without wasting any remaining diamonds in the inventory and by considering the presence of clusters (groups of diamonds). We are also contemplating the use of teleportation to reach targets more quickly and employing a red button if there are no more clusters or only a few diamonds left.
+In the project of creating a bot for the game Etimo Diamonds, we are using a greedy algorithm to acquire as many diamonds as possible in the most efficient way. We apply a greedy approach by considering efficiency through emptying the inventory back to the base without wasting any remaining diamonds in the inventory and by considering the presence of clusters (groups of diamonds). We are also contemplating the use of teleportation to reach targets more quickly and employing a red button if there are no more clusters or only a few diamonds left. In this implementation, our submission bot is named AkiongBot which implements Greedy by Clustering Efficiency Concept to obtain the highest score. AkiongBot takes account of the total value of a cluster which is then divided by the total distance of bot to cluster, cluster to base, and distance inside cluster.
 
 ## Built With
 
